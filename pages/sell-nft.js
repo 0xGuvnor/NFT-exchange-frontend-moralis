@@ -128,6 +128,9 @@ export default function Home() {
 				<div className="text-2xl pb-2">
 					Withdraw {ethers.utils.formatEther(proceeds)} ETH
 				</div>
+				<div className="pb-2 underline-offset-auto">
+					All proceeds from your sales can be found here
+				</div>
 				{proceeds != "0" ? (
 					<Button
 						onClick={() => {

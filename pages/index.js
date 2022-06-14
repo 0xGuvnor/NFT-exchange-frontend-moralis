@@ -8,7 +8,7 @@ export default function Home() {
 	const { isWeb3Enabled } = useMoralis();
 	const { data: listedNfts, isFetching: fetchingListedNfts } = useMoralisQuery(
 		"ActiveItem",
-		(query) => query.limit(10).descending("tokenId")
+		(query) => query.limit(15).descending("tokenId")
 	);
 
 	return (

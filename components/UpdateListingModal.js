@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useWeb3Contract } from "react-moralis";
-import { Input, Modal, useNotification } from "web3uikit";
+import { Icon, Input, Modal, Typography, useNotification } from "web3uikit";
 import nftExchangeAbi from "../constants/NftExchange.json";
 import { ethers } from "ethers";
 
@@ -44,13 +44,25 @@ export default function UpdateListingModal({ nftAddr, tokenId, isVisible, exchan
 					onSuccess: handleUpdateListingSuccess,
 				});
 			}}
+			title={
+				<div className="flex flex-row">
+					<Icon fill="#000000" size={32} svg="edit" />
+					<div className="px-2">
+						<Typography color="#68738D" variant="h3">
+							Update Listing Price
+						</Typography>
+					</div>
+				</div>
+			}
 		>
-			<Input
-				label="Update listing price in ETH"
-				name="New listing price"
-				type="number"
-				onChange={(event) => setUpdatedPrice(event.target.value)}
-			/>
+			<div className="py-4">
+				<Input
+					label="Price in ETH"
+					name="New listing price"
+					type="number"
+					onChange={(event) => setUpdatedPrice(event.target.value)}
+				/>
+			</div>
 		</Modal>
 	);
 }

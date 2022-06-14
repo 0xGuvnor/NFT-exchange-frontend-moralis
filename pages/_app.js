@@ -6,7 +6,7 @@ import { NotificationProvider } from "web3uikit";
 
 function MyApp({ Component, pageProps }) {
 	return (
-		<div className="bg-gradient-to-t from-indigo-400 to-pink-100">
+		<div className="bg-gradient-to-t from-indigo-400 to-pink-100 min-h-screen">
 			<Head>
 				<title>Broad Ocean</title>
 				<meta name="description" content="NFT Exchange" />
