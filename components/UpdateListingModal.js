@@ -1,0 +1,56 @@
+import { useState } from "react";
+import { useWeb3Contract } from "react-moralis";
+import { Input, Modal, useNotification } from "web3uikit";
+import nftExchangeAbi from "../constants/NftExchange.json";
+import { ethers } from "ethers";
+
+export default function UpdateListingModal({ nftAddr, tokenId, isVisible, exchangeAddr, onClose }) {
+	const dispatch = useNotification();
+
+	const [UpdatedPrice, setUpdatedPrice] = useState(0);
+
+	const handleUpdateListingSuccess = async (tx) => {
+		await tx.wait(1);
+		dispatch({
+			type: "success",
+			title: "Listing Updated",
+			message: "Please refresh to view your updated listing!",
+			position: "topR",
+		});
+		onClose && onClose();
+		setUpdatedPrice(0);
+	};
+
+	const { runContractFunction: updateListing } = useWeb3Contract({
+		abi: nftExchangeAbi,
+		contractAddress: exchangeAddr,
+		functionName: "updateListing",
+		params: {
+			_nftAddr: nftAddr,
+			_tokenId: tokenId,
+			_newPrice: ethers.utils.parseEther(UpdatedPrice.toString() || "0"),
+		},
+	});
+
+	return (
+		<Modal
+			isVisible={isVisible}
+			onCancel={onClose}
+			onCloseButtonPressed={onClose}
+			okText="Confirm"
+			onOk={() => {
+				updateListing({
+					onError: (error) => console.log(error),
+					onSuccess: handleUpdateListingSuccess,
+				});
+			}}
+		>
+			<Input
+				label="Update listing price in ETH"
+				name="New listing price"
+				type="number"
+				onChange={(event) => setUpdatedPrice(event.target.value)}
+			/>
+		</Modal>
+	);
+}
